@@ -1,13 +1,24 @@
 package in.needyourhelp.needyourhelp;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.location.Address;
 import android.location.Geocoder;
+import android.media.Image;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -19,15 +30,17 @@ import java.io.IOException;
 import java.util.List;
 
 public class NeedYourHelp extends FragmentActivity {
-
+    private ImageButton ImgBtn;
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
 
+    //EditText taskName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_need_your_help);
         setUpMapIfNeeded();
     }
+
 
     public void onSearch(View view) {
         EditText mapAddress = (EditText) findViewById(R.id.AddressOnMap);
@@ -49,6 +62,7 @@ public class NeedYourHelp extends FragmentActivity {
         }
         InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         mgr.hideSoftInputFromWindow(mapAddress.getWindowToken(), 0);
+
 
     }
 
@@ -86,6 +100,15 @@ public class NeedYourHelp extends FragmentActivity {
         }
     }
 
+
+    public void showDialog(View v) {
+        MyAlert myAlert = new MyAlert();
+        myAlert.show(getFragmentManager(), "My Alert");
+
+
+    }
+
+
     /**
      * This is where we can add markers or lines, add listeners or move the camera. In this case, we
      * just add a marker near Africa.
@@ -93,7 +116,7 @@ public class NeedYourHelp extends FragmentActivity {
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
     private void setUpMap() {
-        // mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
         mMap.setMyLocationEnabled(true);
     }
 }

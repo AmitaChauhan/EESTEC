@@ -42,7 +42,7 @@ public class MyAlert extends DialogFragment {
 
         //AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("My Dialog");
+        builder.setTitle("Enter your task here");
         // builder = new AlertDialog.Builder(this);
         final EditText textInput = new EditText(getActivity());
         StrName = "Address";
@@ -55,13 +55,13 @@ public class MyAlert extends DialogFragment {
             public void onClick(DialogInterface dialog, int which) {
                 StrName += textInput.getText().toString();
 
-                Toast.makeText(getActivity(), "We have your location", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "You have entered the task", Toast.LENGTH_SHORT).show();
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(getActivity(), "We did not receive your location", Toast.LENGTH_SHORT);
+                Toast.makeText(getActivity(), "You have not entered any task", Toast.LENGTH_SHORT).show();
             }
         });
         // AlertDialog dialogAddress = builder.create();

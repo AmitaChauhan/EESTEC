@@ -96,9 +96,9 @@ public class NeedYourHelp extends AppCompatActivity {
             mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
                     .getMap();
             // Check if we were successful in obtaining the map.
-            if (mMap != null) {
-                setUpMap();
-            }
+        }
+        if (mMap != null) {
+            setUpMap();
         }
     }
 
@@ -106,8 +106,6 @@ public class NeedYourHelp extends AppCompatActivity {
     public void showDialog(View v) {
         MyAlert myAlert = new MyAlert();
         myAlert.show(getFragmentManager(), "My Alert");
-
-
     }
 
 
@@ -118,7 +116,7 @@ public class NeedYourHelp extends AppCompatActivity {
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
     private void setUpMap() {
-        mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+        // mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
         mMap.setMyLocationEnabled(true);
     }
 }

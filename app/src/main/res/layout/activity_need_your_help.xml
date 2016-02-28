@@ -84,25 +84,19 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true" />
 
-    <Button
+    <android.support.design.widget.FloatingActionButton
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/SearchButton"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="103dp"
         android:layout_height="66dp"
-        android:layout_alignParentRight="true"
-        android:layout_gravity="right"
-        android:nestedScrollingEnabled="true"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="end"
+        android:nestedScrollingEnabled="false"
         android:onClick="onSearch"
-        android:text="Search" />
-
-    <ImageButton
-        android:id="@+id/imageButton2"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_below="@id/AddressOnMap"
-        android:layout_gravity="center_horizontal"
-        android:onClick="showDialog"
-        android:src="@mipmap/plusbutton" />
+        android:src="@drawable/abc_ic_search_api_mtrl_alpha"
+        app:borderWidth="0dp"
+        app:backgroundTint="#ddd"/>
 
     <android.support.design.widget.FloatingActionButton
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -114,7 +108,7 @@
         android:src="@mipmap/plusbutton"
         android:layout_alignBottom="@id/map"
         app:borderWidth="0dp"
-        app:backgroundTint="#FFFF"
+        app:backgroundTint="#ddd"
         android:layout_alignEnd="@id/map"
         android:onClick="showDialog"/>
 

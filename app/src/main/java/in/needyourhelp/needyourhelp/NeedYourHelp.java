@@ -9,6 +9,8 @@ import android.location.Geocoder;
 import android.media.Image;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,7 +31,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.io.IOException;
 import java.util.List;
 
-public class NeedYourHelp extends FragmentActivity {
+public class NeedYourHelp extends AppCompatActivity {
     private ImageButton ImgBtn;
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
 

@@ -82,7 +82,6 @@
         android:id="@+id/AddressOnMap"
         android:layout_width="286dp"
         android:layout_height="wrap_content"
-
         android:layout_alignParentLeft="true" />
 
     <Button
@@ -105,5 +104,18 @@
         android:onClick="showDialog"
         android:src="@mipmap/plusbutton" />
 
+    <android.support.design.widget.FloatingActionButton
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/addTaskButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:layout_margin="16dp"
+        android:src="@mipmap/plusbutton"
+        android:layout_alignBottom="@id/map"
+        app:borderWidth="0dp"
+        app:backgroundTint="#FFFF"
+        android:layout_alignEnd="@id/map"
+        android:onClick="showDialog"/>
 
 </RelativeLayout>

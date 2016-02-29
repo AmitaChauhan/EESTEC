@@ -8,13 +8,16 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.media.Image;
 import android.net.Uri;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.internal.view.menu.ActionMenuItemView;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -25,7 +28,11 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
+import com.firebase.ui.auth.core.AuthProviderType;
+import com.firebase.ui.auth.core.FirebaseLoginBaseActivity;
+import com.firebase.ui.auth.core.FirebaseLoginError;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -39,11 +46,85 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.io.IOException;
 import java.util.List;
 
-public class NeedYourHelp extends AppCompatActivity {
+public class NeedYourHelp extends FirebaseLoginBaseActivity {
     private ImageButton ImgBtn;
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
 
-    //EditText taskName;
+    private Firebase firebaseDbRef;
+    private AuthData userAuthData = null;
+
+
+    private void showToast(String msg, int length) {
+        Toast.makeText(this, msg, length).show();
+    }
+
+    private void showError(String header, String message) {
+        showToast(header + ": " + message, Toast.LENGTH_LONG);
+    }
+
+    private void setAddButtonEnabled(boolean enabled) {
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.addTaskButton);
+        fab.setEnabled(enabled);
+    }
+
+    private void userAuthenticated(AuthData authData) {
+        userAuthData = authData;
+
+        ActionMenuItemView loginItem = (ActionMenuItemView) findViewById(R.id.loginAction);
+
+        if (authData != null) {
+            setAddButtonEnabled(true);
+            if (loginItem != null) {
+                loginItem.setIcon(getResources().getDrawable(R.mipmap.logout));
+            }
+        } else {
+            setAddButtonEnabled(false);
+            if (loginItem != null) {
+                loginItem.setIcon(getResources().getDrawable(R.mipmap.login));
+            }
+        }
+    }
+
+    @Override
+    public Firebase getFirebaseRef() {
+        return firebaseDbRef;
+    }
+
+    @Override
+    public void onFirebaseLoginProviderError(FirebaseLoginError firebaseError) {
+        // TODO: Handle error from provider
+        showError("Error from login provider", firebaseError.message);
+    }
+
+    @Override
+    public void onFirebaseLoginUserError(FirebaseLoginError firebaseError) {
+        showError("Error while logging in", firebaseError.message);
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.loginAction:
+                if (userAuthData == null) {
+                    // TODO: Log in user
+                    showFirebaseLoginPrompt();
+                } else {
+                    // Log out user.
+                    firebaseDbRef.unauth();
+                    showToast("User logged out.", Toast.LENGTH_SHORT);
+                }
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +133,15 @@ public class NeedYourHelp extends AppCompatActivity {
         Firebase.setAndroidContext(this);
 
         final NeedYourHelp self = this;
+
+        firebaseDbRef = new Firebase("https://torrid-inferno-1020.firebaseIO.com");
+
+        firebaseDbRef.addAuthStateListener(new Firebase.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(AuthData authData) {
+                self.userAuthenticated(authData);
+            }
+        });
 
         EditText mapAddress = (EditText) findViewById(R.id.AddressOnMap);
         mapAddress.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -144,6 +234,8 @@ public class NeedYourHelp extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
+        setEnabledAuthProvider(AuthProviderType.PASSWORD);
+
     }
 
     @Override

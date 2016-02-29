@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- Login action on the Action bar -->
+    <item
+        android:id="@+id/loginAction"
+        android:icon="@mipmap/login"
+        android:title="Sign-in"
+        app:showAsAction="always" />
+</menu>
